@@ -124,13 +124,6 @@ select {
   color: #241521;
 }
 
-/* Make shadcn buttons visibly pastel */
-button[type="submit"],
-a[href="/admin/products/new"] {
-  font-weight: 800;
-}
-
-/* Premium card styling */
 .soft-card {
   position: relative;
   overflow: hidden;
@@ -172,10 +165,14 @@ a[href="/admin/products/new"] {
   transform: translateY(0);
 }
 
-/* Sidebar */
 .sidebar-shell {
   background:
-    linear-gradient(180deg, rgba(249, 178, 215, 0.38), rgba(207, 236, 243, 0.35), rgba(218, 249, 222, 0.3)),
+    linear-gradient(
+      180deg,
+      rgba(249, 178, 215, 0.38),
+      rgba(207, 236, 243, 0.35),
+      rgba(218, 249, 222, 0.3)
+    ),
     #fffafd;
 }
 
@@ -197,7 +194,6 @@ a[href="/admin/products/new"] {
   background: rgba(255, 255, 255, 0.75);
 }
 
-/* Product image cards */
 .product-image-tile {
   background:
     radial-gradient(circle at 20% 20%, rgba(249, 178, 215, 0.5), transparent 35%),
@@ -206,7 +202,6 @@ a[href="/admin/products/new"] {
     #ffffff;
 }
 
-/* Animations */
 .fade-in {
   animation: fadeIn 220ms ease-out both;
 }

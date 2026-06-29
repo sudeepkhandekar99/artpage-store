@@ -37,9 +37,12 @@ export default function ProductFilters({
       params.set(key, value);
     }
 
-    router.replace(params.toString() ? `${pathname}?${params.toString()}` : pathname, {
-      scroll: false,
-    });
+    router.replace(
+      params.toString() ? `${pathname}?${params.toString()}` : pathname,
+      {
+        scroll: false,
+      }
+    );
   }
 
   useEffect(() => {
@@ -48,7 +51,6 @@ export default function ProductFilters({
     }, 350);
 
     return () => clearTimeout(timer);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [search]);
 
   return (

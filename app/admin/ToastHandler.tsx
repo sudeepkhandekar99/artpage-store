@@ -29,7 +29,9 @@ export default function ToastHandler() {
     const params = new URLSearchParams(searchParams.toString());
     params.delete("toast");
 
-    const nextUrl = params.toString() ? `${pathname}?${params.toString()}` : pathname;
+    const nextUrl = params.toString()
+      ? `${pathname}?${params.toString()}`
+      : pathname;
 
     router.replace(nextUrl, { scroll: false });
   }, [searchParams, pathname, router]);

@@ -34,7 +34,7 @@ export async function loginSuperAdmin(formData: FormData) {
     redirect("/login?error=invalid");
   }
 
-  redirect("/admin/products");
+  redirect("/admin/products/new");
 }
 
 export async function logoutSuperAdmin() {

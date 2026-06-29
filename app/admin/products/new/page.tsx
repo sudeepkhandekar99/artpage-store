@@ -2,12 +2,11 @@ import { createProduct } from "../actions";
 import ProductFormFields from "../ProductFormFields";
 
 import { Button } from "@/components/ui/button";
-import {
-  Card,
-  CardContent,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+
+export const metadata = {
+  title: "Add Product",
+};
 
 export default function AddProductPage() {
   return (
@@ -30,7 +29,10 @@ export default function AddProductPage() {
           <form action={createProduct} className="space-y-5">
             <ProductFormFields imageLabel="Product Images" />
 
-            <Button type="submit" className="soft-button w-full font-bold sm:w-auto">
+            <Button
+              type="submit"
+              className="soft-button w-full font-bold sm:w-auto"
+            >
               Create Product
             </Button>
           </form>

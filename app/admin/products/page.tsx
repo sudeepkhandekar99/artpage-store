@@ -2,17 +2,18 @@ import Link from "next/link";
 import { supabaseAdmin } from "@/lib/supabase/admin";
 import { deleteProduct, updateProduct } from "./actions";
 import ProductFormFields from "./ProductFormFields";
+import ProductFilters from "./ProductFilters";
 
 import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
 import { Badge } from "@/components/ui/badge";
 import { Separator } from "@/components/ui/separator";
-import {
-  Card,
-  CardContent,
-} from "@/components/ui/card";
+import { Card, CardContent } from "@/components/ui/card";
 
 const BUCKET = "product-images";
+
+export const metadata = {
+  title: "All Products",
+};
 
 type Product = {
   id: string;
@@ -88,106 +89,42 @@ export default async function ProductsPage({ searchParams }: PageProps) {
   const products = (data || []) as Product[];
 
   return (
-    <div className="space-y-6">
+    <div className="space-y-5 slide-up">
       <div className="flex flex-col gap-3 sm:flex-row sm:items-end sm:justify-between">
         <div>
-          <h2 className="text-2xl font-semibold tracking-tight sm:text-3xl">
+          <h2 className="text-3xl font-extrabold tracking-tight">
             All Products
           </h2>
-          <p className="text-sm text-muted-foreground sm:text-base">
-            Filter, review, edit, and delete your products.
+          <p className="mt-1 text-base font-semibold text-muted-foreground">
+            Filter, review, edit, and delete products.
           </p>
         </div>
 
-        <Button asChild className="w-full sm:w-auto">
+        <Button asChild className="soft-button w-full font-bold sm:w-auto">
           <Link href="/admin/products/new">Add Product</Link>
         </Button>
       </div>
 
-      <Card>
-        <CardContent className="p-4 sm:p-6">
-          <form
-            action="/admin/products"
-            className="grid gap-4 md:grid-cols-[1.5fr_1fr_1fr_1fr_auto]"
-          >
-            <div className="space-y-2">
-              <label className="text-sm font-medium">Search</label>
-              <Input
-                name="q"
-                placeholder="Search by product name"
-                defaultValue={q}
-              />
-            </div>
-
-            <div className="space-y-2">
-              <label className="text-sm font-medium">Category</label>
-              <select
-                name="category"
-                defaultValue={category}
-                className="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm"
-              >
-                <option value="all">All</option>
-                <option value="canvas">Canvas</option>
-                <option value="vinyl">Vinyl</option>
-                <option value="bookmark">Bookmark</option>
-                <option value="print">Print</option>
-                <option value="other">Other</option>
-              </select>
-            </div>
-
-            <div className="space-y-2">
-              <label className="text-sm font-medium">Status</label>
-              <select
-                name="status"
-                defaultValue={status}
-                className="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm"
-              >
-                <option value="all">All</option>
-                <option value="draft">Draft</option>
-                <option value="active">Active</option>
-                <option value="archived">Archived</option>
-              </select>
-            </div>
-
-            <div className="space-y-2">
-              <label className="text-sm font-medium">Featured</label>
-              <select
-                name="featured"
-                defaultValue={featured}
-                className="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm"
-              >
-                <option value="all">All</option>
-                <option value="true">Featured</option>
-                <option value="false">Not Featured</option>
-              </select>
-            </div>
-
-            <div className="flex items-end gap-2">
-              <Button type="submit" className="flex-1 md:flex-none">
-                Filter
-              </Button>
-
-              <Button asChild variant="outline" className="flex-1 md:flex-none">
-                <Link href="/admin/products">Clear</Link>
-              </Button>
-            </div>
-          </form>
-        </CardContent>
-      </Card>
+      <ProductFilters
+        q={q}
+        category={category}
+        status={status}
+        featured={featured}
+      />
 
       <div className="flex items-center justify-between">
-        <p className="text-sm text-muted-foreground">
+        <p className="text-sm font-bold text-muted-foreground">
           Showing {products.length} product{products.length === 1 ? "" : "s"}
         </p>
       </div>
 
       <Separator />
 
-      <div className="grid gap-5">
+      <div className="grid gap-4">
         {products.length === 0 && (
-          <Card>
-            <CardContent className="p-6 text-sm text-muted-foreground">
-              No products found. Try clearing the filters or add a new product.
+          <Card className="soft-card">
+            <CardContent className="p-6 text-sm font-semibold text-muted-foreground">
+              No products found. Clear filters or add a new product.
             </CardContent>
           </Card>
         )}
@@ -198,50 +135,67 @@ export default async function ProductsPage({ searchParams }: PageProps) {
             publicImageUrl(product.png_image_path);
 
           return (
-            <Card key={product.id}>
-              <CardContent className="p-4 sm:p-6">
-                <div className="grid gap-5 lg:grid-cols-[180px_1fr]">
-                  <div className="flex h-[180px] w-full items-center justify-center rounded-lg border bg-muted lg:w-[180px]">
+            <Card key={product.id} className="soft-card">
+              <CardContent className="p-4 sm:p-5">
+                <div className="grid gap-4 lg:grid-cols-[160px_1fr]">
+                  <div className="product-image-tile flex h-[150px] w-full items-center justify-center rounded-xl border p-2 sm:h-[160px] lg:w-[160px]">
                     {imageUrl ? (
                       <img
                         src={imageUrl}
                         alt={product.alt_text || product.name}
-                        className="max-h-full max-w-full object-contain"
+                        className="max-h-full max-w-full object-contain transition-transform duration-200 hover:scale-105"
                       />
                     ) : (
-                      <span className="text-sm text-muted-foreground">
+                      <span className="text-sm font-semibold text-muted-foreground">
                         No image
                       </span>
                     )}
                   </div>
 
-                  <div className="min-w-0 space-y-5">
+                  <div className="min-w-0 space-y-4">
                     <div className="flex flex-col gap-3 sm:flex-row sm:items-start sm:justify-between">
                       <div className="min-w-0">
-                        <h3 className="break-words text-xl font-medium">
+                        <h3 className="break-words text-xl font-extrabold">
                           {product.name}
                         </h3>
 
                         <div className="mt-2 flex flex-wrap gap-2">
-                          <Badge variant="secondary">{product.category}</Badge>
-                          <Badge>{product.status}</Badge>
+                          <Badge variant="secondary" className="font-bold">
+                            {product.category}
+                          </Badge>
+                          <Badge className="font-bold">{product.status}</Badge>
                           {product.featured && (
-                            <Badge variant="outline">Featured</Badge>
+                            <Badge variant="outline" className="font-bold">
+                              Featured
+                            </Badge>
                           )}
+                        </div>
+
+                        <div className="mt-2 grid gap-1 text-sm font-semibold text-muted-foreground sm:grid-cols-2">
+                          {product.dimensions && (
+                            <p>Dimensions: {product.dimensions}</p>
+                          )}
+                          {product.sku && <p>SKU: {product.sku}</p>}
                         </div>
                       </div>
 
-                      <p className="text-lg font-semibold">
+                      <p className="text-xl font-extrabold">
                         ${Number(product.price).toFixed(2)}
                       </p>
                     </div>
 
-                    <details className="rounded-lg border p-4">
-                      <summary className="cursor-pointer text-sm font-medium">
+                    {product.description && (
+                      <p className="line-clamp-2 text-sm font-semibold text-muted-foreground">
+                        {product.description}
+                      </p>
+                    )}
+
+                    <details className="rounded-xl border bg-background p-4 transition-all duration-200 open:shadow-sm">
+                      <summary className="cursor-pointer text-sm font-extrabold">
                         Edit Product
                       </summary>
 
-                      <form action={updateProduct} className="mt-5 space-y-6">
+                      <form action={updateProduct} className="mt-5 space-y-5">
                         <input type="hidden" name="id" value={product.id} />
 
                         <ProductFormFields
@@ -249,11 +203,12 @@ export default async function ProductsPage({ searchParams }: PageProps) {
                           imageLabel="Replace Images"
                         />
 
-                        <div className="flex flex-col gap-3 sm:flex-row">
-                          <Button type="submit" className="w-full sm:w-auto">
-                            Save Changes
-                          </Button>
-                        </div>
+                        <Button
+                          type="submit"
+                          className="soft-button w-full font-bold sm:w-auto"
+                        >
+                          Save Changes
+                        </Button>
                       </form>
                     </details>
 
@@ -262,7 +217,7 @@ export default async function ProductsPage({ searchParams }: PageProps) {
                       <Button
                         type="submit"
                         variant="destructive"
-                        className="w-full sm:w-auto"
+                        className="soft-button w-full font-bold sm:w-auto"
                       >
                         Delete Product
                       </Button>

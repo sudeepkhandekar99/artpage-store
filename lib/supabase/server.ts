@@ -26,7 +26,7 @@ export async function createSupabaseServerClient() {
             cookieStore.set(name, value, options);
           });
         } catch {
-          // This can happen in Server Components. Safe to ignore.
+          // Safe to ignore inside Server Components.
         }
       },
     },

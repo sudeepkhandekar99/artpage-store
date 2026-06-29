@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import type { ReactNode } from "react";
 import { Cormorant_Garamond, Manrope } from "next/font/google";
 import { Toaster } from "sonner";
 import "./globals.css";
@@ -17,14 +18,17 @@ const cormorant = Cormorant_Garamond({
 });
 
 export const metadata: Metadata = {
-  title: "Ranin Store Admin",
-  description: "Product database manager",
+  title: {
+    default: "Ranin Art Admin",
+    template: "%s | Ranin Art Admin",
+  },
+  description: "Admin dashboard for managing Ranin Art products.",
 };
 
 export default function RootLayout({
   children,
 }: {
-  children: React.ReactNode;
+  children: ReactNode;
 }) {
   return (
     <html lang="en" className={`${manrope.variable} ${cormorant.variable}`}>

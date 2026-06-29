@@ -35,21 +35,28 @@ export default function AdminShell({
     <div className="min-h-screen bg-muted/30">
       <ToastHandler />
 
-      <header className="sticky top-0 z-40 border-b bg-background/95 backdrop-blur md:hidden">
+      <header className="sticky top-0 z-40 border-b bg-background/90 backdrop-blur-md md:hidden">
         <div className="flex items-center justify-between px-4 py-3">
           <button
             type="button"
             onClick={() => setMobileOpen(true)}
-            className="soft-button rounded-md border bg-background px-3 py-2 text-base font-bold"
+            className="soft-button rounded-md border bg-background px-3 py-2 text-base font-extrabold"
             aria-label="Open menu"
           >
             ☰
           </button>
 
-          <div className="text-base font-bold">Store Admin</div>
+          <div className="font-display text-xl font-bold tracking-tight">
+            Store Admin
+          </div>
 
           <form action={logoutAction}>
-            <Button size="sm" variant="outline" type="submit" className="soft-button">
+            <Button
+              size="sm"
+              variant="outline"
+              type="submit"
+              className="soft-button font-bold"
+            >
               Logout
             </Button>
           </form>
@@ -65,11 +72,13 @@ export default function AdminShell({
             onClick={() => setMobileOpen(false)}
           />
 
-          <aside className="relative h-full w-[280px] border-r bg-background p-5 shadow-2xl slide-up">
-            <div className="mb-6 flex items-center justify-between">
+          <aside className="sidebar-shell relative h-full w-[280px] border-r p-5 shadow-2xl slide-up">
+            <div className="mb-7 flex items-start justify-between">
               <div>
-                <h1 className="text-xl font-bold tracking-tight">Store Admin</h1>
-                <p className="text-sm font-semibold text-muted-foreground">
+                <h1 className="font-display text-2xl font-bold tracking-tight">
+                  Store Admin
+                </h1>
+                <p className="mt-1 text-sm font-bold text-muted-foreground">
                   @{username}
                 </p>
               </div>
@@ -77,7 +86,8 @@ export default function AdminShell({
               <button
                 type="button"
                 onClick={() => setMobileOpen(false)}
-                className="soft-button rounded-md border px-3 py-1 text-sm font-bold"
+                className="soft-button rounded-md border bg-background/80 px-3 py-1 text-sm font-extrabold"
+                aria-label="Close menu"
               >
                 ✕
               </button>
@@ -95,7 +105,7 @@ export default function AdminShell({
                     className={`sidebar-link block ${
                       active
                         ? "bg-primary text-primary-foreground shadow-sm"
-                        : "text-foreground hover:bg-muted"
+                        : "text-foreground hover:bg-white/70"
                     }`}
                   >
                     {item.label}
@@ -105,7 +115,11 @@ export default function AdminShell({
             </nav>
 
             <form action={logoutAction} className="mt-8">
-              <Button type="submit" variant="outline" className="soft-button w-full">
+              <Button
+                type="submit"
+                variant="outline"
+                className="soft-button w-full font-bold"
+              >
                 Logout
               </Button>
             </form>
@@ -114,10 +128,12 @@ export default function AdminShell({
       )}
 
       <div className="md:grid md:grid-cols-[240px_1fr]">
-        <aside className="sticky top-0 hidden h-screen border-r bg-background p-5 md:block">
-          <div className="mb-7">
-            <h1 className="text-2xl font-bold tracking-tight">Store Admin</h1>
-            <p className="mt-1 text-sm font-semibold text-muted-foreground">
+        <aside className="sidebar-shell sticky top-0 hidden h-screen border-r p-5 md:block">
+          <div className="mb-8">
+            <h1 className="font-display text-3xl font-bold tracking-tight">
+              Store Admin
+            </h1>
+            <p className="mt-1 text-sm font-bold text-muted-foreground">
               Logged in as {username}
             </p>
           </div>
@@ -133,7 +149,7 @@ export default function AdminShell({
                   className={`sidebar-link block ${
                     active
                       ? "bg-primary text-primary-foreground shadow-sm"
-                      : "text-foreground hover:bg-muted"
+                      : "text-foreground hover:bg-white/70"
                   }`}
                 >
                   {item.label}
@@ -143,13 +159,19 @@ export default function AdminShell({
           </nav>
 
           <form action={logoutAction} className="absolute bottom-5 left-5 right-5">
-            <Button type="submit" variant="outline" className="soft-button w-full">
+            <Button
+              type="submit"
+              variant="outline"
+              className="soft-button w-full font-bold"
+            >
               Logout
             </Button>
           </form>
         </aside>
 
-        <main className="min-w-0 px-4 py-5 sm:px-5 lg:px-7">{children}</main>
+        <main className="min-w-0 px-4 py-5 sm:px-5 lg:px-7">
+          {children}
+        </main>
       </div>
     </div>
   );
